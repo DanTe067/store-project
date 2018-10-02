@@ -1,9 +1,25 @@
 package my.store.application.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "store_role")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private String name;
+
+    public Role(String name) {
+        this.name = name;
+    }
+
 }
