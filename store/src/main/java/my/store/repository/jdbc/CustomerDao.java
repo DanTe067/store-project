@@ -1,4 +1,4 @@
-package my.store.repository.hibernate;
+package my.store.repository.jdbc;
 
 import my.store.application.model.Customer;
 import my.store.repository.generic.GenericDao;

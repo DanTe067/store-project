@@ -1,4 +1,4 @@
-package my.store.repository.hibernate;
+package my.store.repository.jdbc;
 
 import my.store.application.model.Product;
 import org.hibernate.Session;
@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class ProductDaoHibernateImpl implements ProductDao {
+public class ProductDaoImpl implements ProductDao {
 
     @Autowired
     private SessionFactory sessionFactory;

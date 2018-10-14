@@ -1,7 +1,7 @@
 package my.store.application.service;
 
 import my.store.application.model.Order;
-import my.store.repository.hibernate.OrderDaoHibernateImpl;
+import my.store.repository.jdbc.OrderDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class OrderService {
 
     @Autowired
-    private OrderDaoHibernateImpl orderDao;
+    private OrderDaoImpl orderDao;
 
     public void createOrder(Order order) {
         orderDao.create(order);

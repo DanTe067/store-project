@@ -1,45 +1,46 @@
-package my.store.repository.hibernate;
+package my.store.repository.jdbc;
 
-import my.store.application.model.Role;
+import my.store.application.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class RoleDaoHibernateImpl implements RoleDao {
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public void create(Role role) {
+    public void create(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(role);
+        session.save(user);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public Role get(Integer id) {
+    public User get(Integer id) {
         Session session = sessionFactory.openSession();
-        Role role = session.get(Role.class, id);
+        User user = session.get(User.class, id);
         session.close();
-        return role;
+        return user;
     }
 
     @Override
-    public Role update(Role role) {
+    public User update(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Role updRole = (Role) session.merge(role);
+        User updUser = (User) session.merge(user);
         transaction.commit();
         session.close();
-        return updRole;
+        return updUser;
     }
 
     @Override
@@ -52,9 +53,19 @@ public class RoleDaoHibernateImpl implements RoleDao {
     }
 
     @Override
-    public List<Role> getAll() {
+    public List<User> getAll() {
         Session session = sessionFactory.openSession();
-        List<Role> roles = session.createQuery("from Role").list();
-        return roles;
+        List<User> users = session.createQuery("from User").list();
+        return users;
+    }
+
+    @Override
+    public List<User> getByLogin(String login) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from User where login = ?");
+        query.setParameter(0, login);
+        List<User> users = query.getResultList();
+        session.close();
+        return users;
     }
 }

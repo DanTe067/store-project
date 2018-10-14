@@ -1,7 +1,7 @@
 package my.store.application.service;
 
 import my.store.application.model.User;
-import my.store.repository.hibernate.UserDaoHibernateImpl;
+import my.store.repository.jdbc.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserDaoHibernateImpl userDao;
+    private UserDaoImpl userDao;
 
     public void createUser(User user) {
         userDao.create(user);

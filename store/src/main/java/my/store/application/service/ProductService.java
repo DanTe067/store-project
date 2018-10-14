@@ -1,7 +1,7 @@
 package my.store.application.service;
 
 import my.store.application.model.Product;
-import my.store.repository.hibernate.ProductDaoHibernateImpl;
+import my.store.repository.jdbc.ProductDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    private ProductDaoHibernateImpl productDao;
+    private ProductDaoImpl productDao;
 
     public void createProduct(Product product) {
         productDao.create(product);

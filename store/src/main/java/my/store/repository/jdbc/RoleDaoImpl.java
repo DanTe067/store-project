@@ -1,46 +1,45 @@
-package my.store.repository.hibernate;
+package my.store.repository.jdbc;
 
-import my.store.application.model.Order;
+import my.store.application.model.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class OrderDaoHibernateImpl implements OrderDao {
+public class RoleDaoImpl implements RoleDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public void create(Order order) {
+    public void create(Role role) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(order);
+        session.save(role);
         transaction.commit();
         session.close();
     }
 
     @Override
-    public Order get(Integer id) {
+    public Role get(Integer id) {
         Session session = sessionFactory.openSession();
-        Order order = session.get(Order.class, id);
+        Role role = session.get(Role.class, id);
         session.close();
-        return order;
+        return role;
     }
 
     @Override
-    public Order update(Order order) {
+    public Role update(Role role) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Order updOrder = (Order) session.merge(order);
+        Role updRole = (Role) session.merge(role);
         transaction.commit();
         session.close();
-        return updOrder;
+        return updRole;
     }
 
     @Override
@@ -53,19 +52,9 @@ public class OrderDaoHibernateImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getAll() {
+    public List<Role> getAll() {
         Session session = sessionFactory.openSession();
-        List<Order> orders = session.createQuery("from Order").list();
-        return orders;
-    }
-
-    @Override
-    public List<Order> getByCustomerId(int id) {
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Order where customer = ?");
-        query.setParameter(0, id);
-        List<Order> orders = query.getResultList();
-        session.close();
-        return orders;
+        List<Role> roles = session.createQuery("from Role").list();
+        return roles;
     }
 }
