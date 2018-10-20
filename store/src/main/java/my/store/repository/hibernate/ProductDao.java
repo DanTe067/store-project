@@ -1,4 +1,4 @@
-package my.store.repository.jdbc;
+package my.store.repository.hibernate;
 
 import my.store.application.model.Product;
 import my.store.repository.generic.GenericDao;
@@ -15,6 +15,6 @@ public interface ProductDao extends GenericDao<Integer, Product> {
 
     List<Product> getAllWithPriceHigher(int minPrice);
 
-    List<Product> getAllWithPriveBetween(int minPrice, int maxPrice);
+    List<Product> getAllWithPriceBetween(int minPrice, int maxPrice);
 
 }

@@ -16,6 +16,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "order_id")
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
@@ -23,8 +24,8 @@ public class Order {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "store_order_product",
-            joinColumns = {@JoinColumn(name = "orders_id")},
-            inverseJoinColumns = {@JoinColumn(name = "products_id")}
+            joinColumns = {@JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     private List<Product> products;
 

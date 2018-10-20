@@ -1,11 +1,13 @@
 package my.store.application.service;
 
 import my.store.application.model.Product;
-import my.store.repository.jdbc.ProductDaoImpl;
+import my.store.repository.hibernate.ProductDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductService {
 
     @Autowired
@@ -48,6 +50,6 @@ public class ProductService {
     }
 
     public List<Product> getAllProductsWithPriceBetween(int minPrice, int maxPrice) {
-        return productDao.getAllWithPriveBetween(minPrice, maxPrice);
+        return productDao.getAllWithPriceBetween(minPrice, maxPrice);
     }
 }

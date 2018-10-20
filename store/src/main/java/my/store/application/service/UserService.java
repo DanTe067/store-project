@@ -1,11 +1,13 @@
 package my.store.application.service;
 
 import my.store.application.model.User;
-import my.store.repository.jdbc.UserDaoImpl;
+import my.store.repository.hibernate.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService {
 
     @Autowired

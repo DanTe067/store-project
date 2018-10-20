@@ -1,11 +1,13 @@
 package my.store.application.service;
 
 import my.store.application.model.Order;
-import my.store.repository.jdbc.OrderDaoImpl;
+import my.store.repository.hibernate.OrderDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrderService {
 
     @Autowired

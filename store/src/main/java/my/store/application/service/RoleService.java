@@ -1,7 +1,7 @@
 package my.store.application.service;
 
 import my.store.application.model.Role;
-import my.store.repository.jdbc.RoleDaoImpl;
+import my.store.repository.hibernate.RoleDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package my.store.repository.jdbc;
+package my.store.repository.hibernate;
 
 import my.store.application.model.Product;
 import org.hibernate.Session;
@@ -100,7 +100,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllWithPriveBetween(int minPrice, int maxPrice) {
+    public List<Product> getAllWithPriceBetween(int minPrice, int maxPrice) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from Product where price between ? and ?");
         query.setParameter(0, minPrice);
