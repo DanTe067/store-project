@@ -15,6 +15,6 @@ public interface ProductDao extends GenericDao<Integer, Product> {
 
     List<Product> getAllWithPriceHigher(int minPrice);
 
-    List<Product> getAllWithPriveBetween(int minPrice, int maxPrice);
+    List<Product> getAllWithPriceBetween(int minPrice, int maxPrice);
 
 }

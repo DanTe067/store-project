@@ -1,7 +1,7 @@
 package my.store.application.service;
 
 import my.store.application.model.Role;
-import my.store.repository.hibernate.RoleDaoHibernateImpl;
+import my.store.repository.hibernate.RoleDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class RoleService {
 
     @Autowired
-    private RoleDaoHibernateImpl roleDao;
+    private RoleDaoImpl roleDao;
 
     public void createRole(Role role) {
         roleDao.create(role);

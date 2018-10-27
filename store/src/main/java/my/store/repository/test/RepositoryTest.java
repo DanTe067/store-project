@@ -3,9 +3,11 @@ package my.store.repository.test;
 import my.store.application.model.*;
 import my.store.application.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+@Component
 public class RepositoryTest {
 
     @Autowired
@@ -18,6 +20,7 @@ public class RepositoryTest {
     private static CustomerService customerService;
     @Autowired
     private static OrderService orderService;
+
 
     private static void addRoles(Role... roles) {
         for (Role role : roles) {

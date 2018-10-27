@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class ProductDaoHibernateImpl implements ProductDao {
+public class ProductDaoImpl implements ProductDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -100,7 +100,7 @@ public class ProductDaoHibernateImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllWithPriveBetween(int minPrice, int maxPrice) {
+    public List<Product> getAllWithPriceBetween(int minPrice, int maxPrice) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from Product where price between ? and ?");
         query.setParameter(0, minPrice);

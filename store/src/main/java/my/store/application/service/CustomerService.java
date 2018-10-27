@@ -1,15 +1,17 @@
 package my.store.application.service;
 
 import my.store.application.model.Customer;
-import my.store.repository.hibernate.CustomerDaoHibernateImpl;
+import my.store.repository.hibernate.CustomerDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CustomerService {
 
     @Autowired
-    private CustomerDaoHibernateImpl customerDao;
+    private CustomerDaoImpl customerDao;
 
     public void createCustomer(Customer customer) {
         customerDao.create(customer);

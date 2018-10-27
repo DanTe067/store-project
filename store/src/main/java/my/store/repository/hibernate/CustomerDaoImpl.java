@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class CustomerDaoHibernateImpl implements CustomerDao {
+public class CustomerDaoImpl implements CustomerDao {
 
     @Autowired
     private SessionFactory sessionFactory;
