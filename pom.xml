@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>store</module>
+        <module>nc-edu</module>
     </modules>
 
     <dependencies>
