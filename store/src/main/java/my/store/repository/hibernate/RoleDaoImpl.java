@@ -5,14 +5,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository(value = "roleDao")
 public class RoleDaoImpl implements RoleDao {
 
     @Autowired
+    @Qualifier(value = "sessionFactory")
     private SessionFactory sessionFactory;
 
     @Override

@@ -3,14 +3,19 @@ package my.store.application.service;
 import my.store.application.model.Role;
 import my.store.repository.hibernate.RoleDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service(value = "roleService")
 public class RoleService {
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    @Qualifier(value = "roleDao")
     private RoleDaoImpl roleDao;
 
     public void createRole(Role role) {

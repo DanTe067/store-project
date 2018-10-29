@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import java.util.List;
 
-@Repository
+@Repository(value = "orderDao")
 public class OrderDaoImpl implements OrderDao {
 
     @Autowired
