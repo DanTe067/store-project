@@ -1,0 +1,34 @@
+package my.flipside.application.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.sql.Date;
+
+@Entity
+@Table(name = "flipresult", schema = "public")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FlipResult {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "result_id")
+    private int resultId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "game_id", referencedColumnName = "game_id")
+    private FlipGame game;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "user_id")
+    private FlipUser winner;
+    private Date date;
+
+    public FlipResult(FlipGame game, FlipUser winner) {
+        this.game = game;
+        this.winner = winner;
+    }
+
+}
