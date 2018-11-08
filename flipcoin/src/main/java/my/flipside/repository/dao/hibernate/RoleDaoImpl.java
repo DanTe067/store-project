@@ -16,12 +16,13 @@ public class RoleDaoImpl implements RoleDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void create(FlipRole role) {
+    public int create(FlipRole role) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(role);
         transaction.commit();
         session.close();
+        return role.getRoleId();
     }
 
     @Override

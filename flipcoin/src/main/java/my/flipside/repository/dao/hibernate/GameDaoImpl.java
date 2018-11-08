@@ -17,12 +17,13 @@ public class GameDaoImpl implements GameDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void create(FlipGame game) {
+    public int create(FlipGame game) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(game);
         transaction.commit();
         session.close();
+        return game.getGameId();
     }
 
     @Override

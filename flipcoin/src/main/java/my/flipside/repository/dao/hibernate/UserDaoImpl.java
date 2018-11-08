@@ -17,12 +17,13 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void create(FlipUser user) {
+    public int create(FlipUser user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(user);
         transaction.commit();
         session.close();
+        return user.getUserId();
     }
 
     @Override

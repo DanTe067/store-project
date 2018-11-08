@@ -5,8 +5,8 @@ import my.flipside.repository.generic.GenericDao;
 
 public interface StatDao extends GenericDao<Integer, FlipStat> {
     @Override
-    default void create(FlipStat stat) {
-
+    default int create(FlipStat stat) {
+        return 0;
     }
 
     @Override

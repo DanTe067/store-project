@@ -17,12 +17,13 @@ public class ResultDaoImpl implements ResultDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void create(FlipResult result) {
+    public int create(FlipResult result) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(result);
         transaction.commit();
         session.close();
+        return result.getResultId();
     }
 
     @Override
