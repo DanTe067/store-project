@@ -63,10 +63,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public FlipUser getByLoginAndPassword(String login, String password) {
+    public FlipUser getByUsername(String username) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from FlipUser where login = :login and password = :password");
-        query.setParameter("login", login);
+        Query query = session.createQuery("from FlipUser where username = :username");
+        query.setParameter("username", username);
+        FlipUser user = (FlipUser) query.getSingleResult();
+        session.close();
+        return user;
+    }
+
+    @Override
+    public FlipUser getByUsernameAndPassword(String username, String password) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from FlipUser where username = :username and password = :password");
+        query.setParameter("username", username);
         query.setParameter("password", password);
         FlipUser user = (FlipUser) query.getSingleResult();
         session.close();

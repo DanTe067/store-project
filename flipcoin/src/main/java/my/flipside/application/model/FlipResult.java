@@ -18,7 +18,7 @@ public class FlipResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "result_id")
     private int resultId;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "game_id", referencedColumnName = "game_id")
     private FlipGame game;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

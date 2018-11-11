@@ -33,7 +33,11 @@ public class UserService {
         return userDao.getAll();
     }
 
-    public FlipUser getUserByLoginAndPassword(String login, String password) {
-        return userDao.getByLoginAndPassword(login, password);
+    public FlipUser getUserByUsername(String username) {
+        return userDao.getByUsername(username);
+    }
+
+    public FlipUser getUserByUsernameAndPassword(String username, String password) {
+        return userDao.getByUsernameAndPassword(username, password);
     }
 }
