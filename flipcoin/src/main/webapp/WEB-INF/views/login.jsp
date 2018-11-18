@@ -21,35 +21,10 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body style="background-image:url(http://2.bp.blogspot.com/-v8fxIAZrrSM/UiAUGi3AneI/AAAAAAAAJXI/jCbg3AGbe24/s1600/Background-Star-Wars-Wallpapers3.jpg); background-position: center; background-size: cover;">
+<body style="background:
+url(http://2.bp.blogspot.com/-v8fxIAZrrSM/UiAUGi3AneI/AAAAAAAAJXI/jCbg3AGbe24/s1600/Background-Star-Wars-Wallpapers3.jpg) center;
+background-size: cover;">
 <div class="container">
-    <%--<nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Employee CRUD</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Page 1</a></li>
-                <li><a href="#">Page 2</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <sec:authorize access="isAuthenticated()">
-                <li>
-                    <a href="">
-                        <span class="glyphicon glyphicon-user"></span> Welcome, <sec:authentication property="principal.username"/>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/logout">
-                        <span class="glyphicon glyphicon-log-in"></span> Logout
-                    </a>
-                </li>
-                </sec:authorize>
-            </ul>
-        </div>
-    </nav>--%>
     <br><br><br><br>
     <div class="row">
         <div class="panel panel-info col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4">
@@ -60,12 +35,13 @@
                 <form accept-charset="UTF-8" role="form" action="/login" method="post">
                     <fieldset>
                         <label for="username"><b>Username</b></label>
-                        <input type="text" class="form-control" placeholder="Enter username.." id="username"
+                        <input type="text" size="20" class="form-control" placeholder="Enter username.." id="username"
                                name="username"
                                required>
                         <br>
                         <label for="password"><b>Password</b></label>
-                        <input type="password" class="form-control" placeholder="Enter password.." id="password"
+                        <input type="password" size="20" class="form-control" placeholder="Enter password.."
+                               id="password"
                                name="password" required>
                         <br>
                         <c:choose>

@@ -14,7 +14,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-public class DbConfig {
+public class HibernateConfig {
 
     @Bean(autowire = Autowire.BY_NAME)
     public LocalSessionFactoryBean sessionFactory() {

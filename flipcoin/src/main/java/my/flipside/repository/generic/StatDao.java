@@ -1,7 +1,6 @@
-package my.flipside.repository.dao.hibernate;
+package my.flipside.repository.generic;
 
 import my.flipside.application.model.FlipStat;
-import my.flipside.repository.generic.GenericDao;
 
 public interface StatDao extends GenericDao<Integer, FlipStat> {
     @Override

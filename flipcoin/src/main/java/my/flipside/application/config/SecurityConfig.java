@@ -1,6 +1,8 @@
 package my.flipside.application.config;
 
 import my.flipside.application.service.UserDetailsServiceImpl;
+import my.flipside.application.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,6 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserService userService;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -46,10 +51,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                /*.successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
+                                                        HttpServletResponse httpServletResponse,
+                                                        Authentication authentication) throws IOException, ServletException {
+                        HttpSession session = httpServletRequest.getSession();
+                        session.setMaxInactiveInterval(300);
+                        session.setAttribute("user", userService.getUserByUsername(
+                                authentication.getName()));
+                    }
+                })*/
                 .defaultSuccessUrl("/main")
                 .failureUrl("/login?error=true")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login");
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true);
     }
 }

@@ -1,9 +1,9 @@
 package my.flipside.repository.dao.hibernate;
 
 import my.flipside.application.model.FlipUser;
+import my.flipside.repository.generic.UserDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +19,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int create(FlipUser user) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         session.save(user);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return user.getUserId();
     }
@@ -37,9 +37,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public FlipUser update(FlipUser user) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipUser updUser = (FlipUser) session.merge(user);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return updUser;
     }
@@ -47,11 +47,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipUser user = new FlipUser();
         user.setUserId(id);
         session.delete(user);
-        transaction.commit();
+        //transaction.commit();
         session.close();
     }
 

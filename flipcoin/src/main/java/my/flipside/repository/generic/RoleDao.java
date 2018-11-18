@@ -1,7 +1,6 @@
-package my.flipside.repository.dao.hibernate;
+package my.flipside.repository.generic;
 
 import my.flipside.application.model.FlipRole;
-import my.flipside.repository.generic.GenericDao;
 
 public interface RoleDao extends GenericDao<Integer, FlipRole> {
 }

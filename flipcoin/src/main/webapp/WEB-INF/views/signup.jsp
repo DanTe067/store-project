@@ -19,7 +19,9 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body style="background-image:url(http://2.bp.blogspot.com/-v8fxIAZrrSM/UiAUGi3AneI/AAAAAAAAJXI/jCbg3AGbe24/s1600/Background-Star-Wars-Wallpapers3.jpg); background-position: center; background-size: cover;">
+<body style="background:
+url(http://2.bp.blogspot.com/-v8fxIAZrrSM/UiAUGi3AneI/AAAAAAAAJXI/jCbg3AGbe24/s1600/Background-Star-Wars-Wallpapers3.jpg) center;
+background-size: cover;">
 <div class="container">
     <br><br><br><br>
     <div class="row">
@@ -31,16 +33,17 @@
                 <form action="/signup" method="post">
                     <fieldset>
                         <label for="username">Username:</label>
-                        <input type="text" class="form-control" placeholder="Choose username.." id="username"
+                        <input type="text" size="20" class="form-control" placeholder="Choose username.." id="username"
                                name="username" required>
                         <br>
                         <label for="password">Password:</label>
-                        <input type="password" class="form-control" placeholder="Choose password.." id="password"
+                        <input type="password" size="20" class="form-control" placeholder="Choose password.."
+                               id="password"
                                name="password" required>
                         <br>
                         <label for="email">E-mail:</label>
-                        <input type="email" class="form-control" placeholder="Enter your email.." id="email"
-                               name="email" required>
+                        <input type="email" size="50" class="form-control" placeholder="Enter your email.." id="email"
+                               name="email">
                         <br>
                         <button type="submit" class="btn btn-success btn-block">
                             Sign Up

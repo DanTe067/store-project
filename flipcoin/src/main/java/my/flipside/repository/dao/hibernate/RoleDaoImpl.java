@@ -1,9 +1,9 @@
 package my.flipside.repository.dao.hibernate;
 
 import my.flipside.application.model.FlipRole;
+import my.flipside.repository.generic.RoleDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +18,9 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public int create(FlipRole role) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         session.save(role);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return role.getRoleId();
     }
@@ -36,9 +36,9 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public FlipRole update(FlipRole role) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipRole updRole = (FlipRole) session.merge(role);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return updRole;
     }
@@ -46,11 +46,11 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipRole role = new FlipRole();
         role.setRoleId(id);
         session.delete(role);
-        transaction.commit();
+        //transaction.commit();
         session.close();
     }
 

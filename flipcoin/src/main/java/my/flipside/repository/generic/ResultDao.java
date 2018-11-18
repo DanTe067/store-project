@@ -1,7 +1,6 @@
-package my.flipside.repository.dao.hibernate;
+package my.flipside.repository.generic;
 
 import my.flipside.application.model.FlipResult;
-import my.flipside.repository.generic.GenericDao;
 
 import java.util.List;
 

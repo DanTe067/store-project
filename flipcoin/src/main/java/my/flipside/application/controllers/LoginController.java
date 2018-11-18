@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping({"/", "/login"})
 public class LoginController {
 
     @GetMapping
-    public ModelAndView login(ModelAndView view, @RequestParam(required = false) String signup) {
+    public ModelAndView loadLogInPage(ModelAndView view, @RequestParam(required = false) String signup) {
         if (signup != null) {
             view.setViewName("signup");
             return view;

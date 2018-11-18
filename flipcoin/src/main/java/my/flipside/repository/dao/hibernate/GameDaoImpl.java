@@ -1,9 +1,9 @@
 package my.flipside.repository.dao.hibernate;
 
 import my.flipside.application.model.FlipGame;
+import my.flipside.repository.generic.GameDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +19,9 @@ public class GameDaoImpl implements GameDao {
     @Override
     public int create(FlipGame game) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         session.save(game);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return game.getGameId();
     }
@@ -37,9 +37,9 @@ public class GameDaoImpl implements GameDao {
     @Override
     public FlipGame update(FlipGame game) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipGame updGame = (FlipGame) session.merge(game);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return updGame;
     }
@@ -47,11 +47,11 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipGame game = new FlipGame();
         game.setGameId(id);
         session.delete(game);
-        transaction.commit();
+        //transaction.commit();
         session.close();
     }
 

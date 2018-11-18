@@ -1,9 +1,9 @@
 package my.flipside.repository.dao.hibernate;
 
 import my.flipside.application.model.FlipResult;
+import my.flipside.repository.generic.ResultDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +19,9 @@ public class ResultDaoImpl implements ResultDao {
     @Override
     public int create(FlipResult result) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         session.save(result);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return result.getResultId();
     }
@@ -37,9 +37,9 @@ public class ResultDaoImpl implements ResultDao {
     @Override
     public FlipResult update(FlipResult result) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipResult updResult = (FlipResult) session.merge(result);
-        transaction.commit();
+        //transaction.commit();
         session.close();
         return updResult;
     }
@@ -47,11 +47,11 @@ public class ResultDaoImpl implements ResultDao {
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         FlipResult result = new FlipResult();
         result.setResultId(id);
         session.delete(result);
-        transaction.commit();
+        //transaction.commit();
         session.close();
     }
 
