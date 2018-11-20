@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/profile")
-@Transactional(propagation = Propagation.SUPPORTS)
 @EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class ProfileController {
 
     @Autowired
@@ -35,6 +35,7 @@ public class ProfileController {
         return view;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @PostMapping
     public ModelAndView changeCreds(ModelAndView view, HttpServletRequest request) {
         FlipStat stat = refreshStat(request);

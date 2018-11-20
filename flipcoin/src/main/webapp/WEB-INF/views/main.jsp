@@ -90,7 +90,7 @@ background-size: cover;">
                 <img class="card-img"
                      src="https://http2.mlstatic.com/taza-magica-personalizada-jedi-sith-star-wars-D_NQ_NP_461415-MLA25237165774_122016-F.jpg"
                      alt="Card image" height="324" width="700"
-                     style="border-radius: 25%; border: 1px solid #20699A; padding: 5px; position: relative;">
+                     style="border-radius: 25%; border: 1px solid #20699A; padding: 5px; position: relative; display: block;">
                 <h5 class="card-title" style="color: white"><b>Choose your side</b></h5>
                 <div class="card-body">
                     <div class="btn-group btn-lg">

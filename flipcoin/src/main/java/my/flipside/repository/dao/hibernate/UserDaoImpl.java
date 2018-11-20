@@ -6,16 +6,22 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import java.util.List;
 
+@EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 @Repository(value = "userDao")
 public class UserDaoImpl implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public int create(FlipUser user) {
         Session session = sessionFactory.openSession();
@@ -34,6 +40,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public FlipUser update(FlipUser user) {
         Session session = sessionFactory.openSession();
@@ -44,6 +51,7 @@ public class UserDaoImpl implements UserDao {
         return updUser;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.openSession();

@@ -4,6 +4,7 @@ import my.flipside.application.model.FlipUser;
 import my.flipside.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import java.util.Random;
 
 @Controller
 @RequestMapping("/fraction")
+@EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class FractionController {
 
     @Autowired
@@ -33,6 +36,7 @@ public class FractionController {
         return view;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @PostMapping
     public ModelAndView loadBattleResult(ModelAndView view, HttpServletRequest request, @RequestParam int bet,
                                          @ModelAttribute String side) {
