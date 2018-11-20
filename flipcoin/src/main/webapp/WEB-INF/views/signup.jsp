@@ -18,6 +18,18 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <%--<script>
+        function myFunction() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>--%>
 </head>
 <body style="background:
 url(http://2.bp.blogspot.com/-v8fxIAZrrSM/UiAUGi3AneI/AAAAAAAAJXI/jCbg3AGbe24/s1600/Background-Star-Wars-Wallpapers3.jpg) center;
@@ -39,7 +51,7 @@ background-size: cover;">
                         <label for="password">Password:</label>
                         <input type="password" size="20" class="form-control" placeholder="Choose password.."
                                id="password"
-                               name="password" required>
+                               name="password" required data-toggle="password">
                         <br>
                         <label for="email">E-mail:</label>
                         <input type="email" size="50" class="form-control" placeholder="Enter your email.." id="email"

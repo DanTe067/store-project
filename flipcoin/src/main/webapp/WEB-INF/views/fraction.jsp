@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Богдан
-  Date: 14.11.2018
-  Time: 17:27
+  Date: 20.11.2018
+  Time: 15:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp" %>
@@ -21,11 +21,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style="background:
-url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png) fixed center;
-background-size: cover;">
-<%--jedy https://cdn.hipwallpaper.com/i/91/42/k4fDga.jpg
-    sith https://wonderfulengineering.com/wp-content/uploads/2014/04/space-wallpapers-20.jpg
---%>
+        url(${background}) fixed center;
+        background-size: cover;">
 <div class="container">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -34,9 +31,6 @@ background-size: cover;">
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="/main">Game rooms</a></li>
-                <%--<sec:authorize access="hasRole('admin')">
-                    <li><a href="/results">Results</a></li>
-                </sec:authorize>--%>
                 <c:choose>
                     <c:when test="${user.role.name == 'admin'}">
                         <li><a href="/results">Results</a></li>
@@ -46,9 +40,8 @@ background-size: cover;">
             <ul class="nav navbar-nav navbar-right">
                 <sec:authorize access="isAuthenticated()">
                     <li>
-                        <a href="/profile">
+                        <a href="#">
                             <span class="glyphicon glyphicon-user"></span> Welcome,
-                                <%--TODO: Implement with Aspect--%>
                             <c:choose>
                                 <c:when test="${user.stat.score <= -1 && user.stat.score > -5}">
                                     Sith apprentice
@@ -84,30 +77,32 @@ background-size: cover;">
             </ul>
         </div>
     </nav>
-    <div class="row" style="margin-top: 5%; margin-bottom: 5%;">
-        <div class="col-lg-8 col-md-8 col-lg-offset-4 col-md-offset-4">
-            <div class="card text-center col-lg-6 col-md-6" align="center">
-                <img class="card-img"
-                     src="https://http2.mlstatic.com/taza-magica-personalizada-jedi-sith-star-wars-D_NQ_NP_461415-MLA25237165774_122016-F.jpg"
-                     alt="Card image" height="324" width="700"
-                     style="border-radius: 25%; border: 1px solid #20699A; padding: 5px; position: relative;">
-                <h5 class="card-title" style="color: white"><b>Choose your side</b></h5>
-                <div class="card-body">
-                    <div class="btn-group btn-lg">
-                        <button type="button" class="btn btn-primary"><a href="/fraction?side=jedy"
-                                                                         style="text-decoration: none; color: white;">Join
-                            the rebellion</a>
-                        </button>
-                        <button type="button" class="btn btn-danger"><a href="/fraction?side=sith"
-                                                                        style="text-decoration: none; color: white;">Join
-                            the empire</a>
-                        </button>
-                    </div>
-                </div>
+    <%--TODO "margin-top: 5%" when sith--%>
+    <div class="row" style="margin-top: 50%; margin-bottom: 5%;">
+        <div class="panel panel-info col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4">
+            <div class="panel-heading">
+                <h4 align="center">BattleField</h4>
+            </div>
+            <div class="panel-body">
+                <form action="/fraction" method="post">
+
+                    <label for="result">Report:</label>
+                    <br>
+                    <input align="center" type="text" readonly class="form-control-plaintext" id="result"
+                           name="result" value="${result}">
+                    <br>
+                    <label for="bet">Bet:</label>
+                    <input type="number" size="10" class="form-control" id="bet"
+                           name="bet" value="10" required>
+                    <br>
+                    <button type="submit" class="btn btn-success btn-block">
+                        Join battle
+                    </button>
+
+                </form>
             </div>
         </div>
     </div>
-    <hr>
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="container-fluid">
             <div class="navbar-header">

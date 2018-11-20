@@ -9,14 +9,23 @@
 <html>
 <head>
     <title>ERROR</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body style="background-image:url(http://wall2born.com/data/out/807/image-44602215-star-wars-desktop-wallpapers-moving.jpg); background-position: center; background-size: cover;">
+<body style="background-image:url(https://i.imgur.com/93to3Zd.jpg);
+background-position: center; background-size: cover;">
 <div class="panel panel-danger col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4">
     <div class="panel-heading">
-        <h4>ERROR</h4>
+        <h1 style="color: red" align="center">ERROR</h1>
     </div>
     <div class="panel-body">
-        <p style="color: red" align="center">OOPS ... SOMETHING GOES WRONG</p>
+        <h3 style="color: red" align="center"><b>OOPS ... SOMETHING GOES WRONG</b></h3>
     </div>
 </div>
 </body>
