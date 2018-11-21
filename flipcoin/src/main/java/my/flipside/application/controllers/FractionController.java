@@ -16,7 +16,6 @@ import java.util.Random;
 @Controller
 @RequestMapping("/fraction")
 @EnableTransactionManagement
-@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class FractionController {
 
     @Autowired

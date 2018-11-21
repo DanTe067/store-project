@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/signup")
 @EnableTransactionManagement
-@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class SignUpController {
 
     @Autowired

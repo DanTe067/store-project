@@ -21,7 +21,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/profile")
 @EnableTransactionManagement
-@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class ProfileController {
 
     @Autowired

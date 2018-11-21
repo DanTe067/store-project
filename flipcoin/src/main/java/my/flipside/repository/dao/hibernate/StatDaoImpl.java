@@ -6,14 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@EnableTransactionManagement
-@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 @Repository(value = "statDao")
 public class StatDaoImpl implements StatDao {
 
@@ -28,7 +23,6 @@ public class StatDaoImpl implements StatDao {
         return stat;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public FlipStat update(FlipStat stat) {
         Session session = sessionFactory.openSession();
