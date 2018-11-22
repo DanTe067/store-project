@@ -19,6 +19,7 @@ public class FlipStat {
     private int statId;
     private int account;
     private int score;
+    private String rank;
 
     public FlipStat(int account, int score) {
         this.account = account;

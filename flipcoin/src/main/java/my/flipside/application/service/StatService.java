@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 @EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class StatService {
 
     @Autowired
@@ -22,6 +22,7 @@ public class StatService {
         return statDao.get(id);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public FlipStat updateStat(FlipStat stat) {
         return statDao.update(stat);
     }

@@ -20,16 +20,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
-    <%--<script>
-        function myFunction() {
-            var x = document.getElementById("password");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        }
-    </script>--%>
 </head>
 <body style="background:
 url(http://2.bp.blogspot.com/-v8fxIAZrrSM/UiAUGi3AneI/AAAAAAAAJXI/jCbg3AGbe24/s1600/Background-Star-Wars-Wallpapers3.jpg) center;
@@ -66,21 +56,34 @@ background-size: cover;">
                                 Cancel
                             </button>
                         </a>
-                        <c:choose>
-                            <c:when test="${error != null}">
-                                <div class="panel panel-danger">
-                                    <div class="panel-heading">ERROR</div>
-                                    <div class="panel-body">
-                                        <p style="color: red" align="center">${error}</p>
-                                    </div>
+                        <c:if test="${error != null}">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">ERROR</div>
+                                <div class="panel-body">
+                                    <p style="color: red" align="center">${error}</p>
                                 </div>
-                            </c:when>
-                        </c:choose>
+                            </div>
+                        </c:if>
                     </fieldset>
                 </form>
             </div>
         </div>
     </div>
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Creator: </a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="https://www.linkedin.com/in/богдан-тесля-597901149/" target="_blank"><img
+                        src="https://www.freeiconspng.com/uploads/linkedin-icon-25.png" height="20" width="20"/></a>
+                </li>
+                <li><a href="https://github.com/DanTe067" target="_blank"><img
+                        src="https://mbtskoudsalg.com/images/github-icon-png-7.png" height="20" width="20"/></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 </body>
 </html>

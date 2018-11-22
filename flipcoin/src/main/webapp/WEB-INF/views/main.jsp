@@ -23,7 +23,7 @@
 <body style="background:
 url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png) fixed center;
 background-size: cover;">
-<%--jedy https://cdn.hipwallpaper.com/i/91/42/k4fDga.jpg
+<%--jedi https://cdn.hipwallpaper.com/i/91/42/k4fDga.jpg
     sith https://wonderfulengineering.com/wp-content/uploads/2014/04/space-wallpapers-20.jpg
 --%>
 <div class="container">
@@ -34,45 +34,15 @@ background-size: cover;">
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="/main">Game rooms</a></li>
-                <%--<sec:authorize access="hasRole('admin')">
-                    <li><a href="/results">Results</a></li>
-                </sec:authorize>--%>
-                <c:choose>
-                    <c:when test="${user.role.name == 'admin'}">
-                        <li><a href="/results">Results</a></li>
-                    </c:when>
-                </c:choose>
+                <c:if test="${user.role.name == 'admin'}">
+                    <li><a href="/results">PvP results</a></li>
+                </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <sec:authorize access="isAuthenticated()">
                     <li>
                         <a href="/profile">
-                            <span class="glyphicon glyphicon-user"></span> Welcome,
-                                <%--TODO: Implement with Aspect--%>
-                            <c:choose>
-                                <c:when test="${user.stat.score <= -1 && user.stat.score > -5}">
-                                    Sith apprentice
-                                </c:when>
-                                <c:when test="${user.stat.score <= -5 && user.stat.score > -10}">
-                                    Sith master
-                                </c:when>
-                                <c:when test="${user.stat.score <= -10}">
-                                    Darth Lord
-                                </c:when>
-                                <c:when test="${user.stat.score == 0}">
-                                    Chosen one
-                                </c:when>
-                                <c:when test="${user.stat.score >= 1 && user.stat.score < 5}">
-                                    Jedy padavan
-                                </c:when>
-                                <c:when test="${user.stat.score >= 5 && user.stat.score < 10}">
-                                    Jedy knight
-                                </c:when>
-                                <c:when test="${user.stat.score >= 10}">
-                                    Jedy grand master
-                                </c:when>
-                            </c:choose>
-                            <sec:authentication property="principal.username"/>
+                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} ${user.username}
                         </a>
                     </li>
                     <li>
@@ -94,7 +64,7 @@ background-size: cover;">
                 <h5 class="card-title" style="color: white"><b>Choose your side</b></h5>
                 <div class="card-body">
                     <div class="btn-group btn-lg">
-                        <button type="button" class="btn btn-primary"><a href="/fraction?side=jedy"
+                        <button type="button" class="btn btn-primary"><a href="/fraction?side=jedi"
                                                                          style="text-decoration: none; color: white;">Join
                             the rebellion</a>
                         </button>

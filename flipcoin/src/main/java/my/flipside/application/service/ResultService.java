@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 @EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class ResultService {
 
     @Autowired
     private ResultDao resultDao;
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int createResult(FlipResult result) {
         return resultDao.create(result);
     }
@@ -26,10 +27,12 @@ public class ResultService {
         return resultDao.get(id);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public FlipResult updateResult(FlipResult result) {
         return resultDao.update(result);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteResult(Integer id) {
         resultDao.delete(id);
     }

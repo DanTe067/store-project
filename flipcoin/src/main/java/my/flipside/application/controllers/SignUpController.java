@@ -8,18 +8,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/signup")
 @EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class SignUpController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView loadSignUpPage(ModelAndView view, @RequestParam String cancel) {
         if (cancel != null) {
             view.setViewName("login");
@@ -30,7 +34,7 @@ public class SignUpController {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     public ModelAndView signUpByForm(ModelAndView view, @ModelAttribute FlipUser user, BindingResult result) {
         if (result.hasErrors()) {
             view.addObject("error", "Registration failed! Errors found in form you've filled");

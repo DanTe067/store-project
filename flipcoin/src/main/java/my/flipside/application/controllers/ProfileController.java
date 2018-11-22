@@ -9,18 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Controller
 @RequestMapping("/profile")
 @EnableTransactionManagement
+@Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
 public class ProfileController {
 
     @Autowired
@@ -28,15 +31,15 @@ public class ProfileController {
     @Autowired
     StatService statService;
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView loadProfilePage(ModelAndView view) {
         view.setViewName("profile");
         return view;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    @PostMapping
-    public ModelAndView changeCreds(ModelAndView view, HttpServletRequest request) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView loadRefreshing(ModelAndView view, HttpServletRequest request) {
         FlipStat stat = refreshStat(request);
         if (stat != null) {
             HttpSession session = request.getSession(false);
@@ -45,7 +48,7 @@ public class ProfileController {
             session.setAttribute("user", userService.getUser(id));
             view.addObject("success", "You've successfully refreshed your profile");
         } else {
-            view.addObject("error", "There was an error in refreshing your profile. Try one more time later");
+            view.addObject("error", "There was an error in refreshing your profile. Try again later");
         }
         view.setViewName("profile");
         return view;
