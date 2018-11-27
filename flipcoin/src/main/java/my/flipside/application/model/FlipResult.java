@@ -22,7 +22,7 @@ public class FlipResult {
     @JoinColumn(name = "game_id", referencedColumnName = "game_id")
     private FlipGame game;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "user_id")
+    @JoinColumn(name = "winner", referencedColumnName = "user_id")
     private FlipUser winner;
     private Date date;
 

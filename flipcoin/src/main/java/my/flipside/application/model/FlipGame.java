@@ -18,17 +18,17 @@ public class FlipGame {
     @Column(name = "game_id")
     private int gameId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "user_id")
-    private FlipUser jedy;
+    @JoinColumn(name = "jedi", referencedColumnName = "user_id")
+    private FlipUser jedi;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "user_id")
-    private FlipUser syth;
+    @JoinColumn(name = "sith", referencedColumnName = "user_id")
+    private FlipUser sith;
     private int bet;
     private boolean completed;
 
-    public FlipGame(FlipUser jedy, FlipUser syth, int bet) {
-        this.jedy = jedy;
-        this.syth = syth;
+    public FlipGame(FlipUser jedi, FlipUser sith, int bet) {
+        this.jedi = jedi;
+        this.sith = sith;
         this.bet = bet;
         this.completed = false;
     }

@@ -5,7 +5,7 @@
   Time: 17:27
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -60,7 +60,7 @@ background-size: cover;">
                 <img class="card-img"
                      src="https://http2.mlstatic.com/taza-magica-personalizada-jedi-sith-star-wars-D_NQ_NP_461415-MLA25237165774_122016-F.jpg"
                      alt="Card image" height="324" width="700"
-                     style="border-radius: 25%; border: 1px solid #20699A; padding: 5px; position: relative; display: block;">
+                     style="border-radius: 25%; border: 1px solid #20699A; padding: 5px; position: relative; display: block; margin-left: -170px;">
                 <h5 class="card-title" style="color: white"><b>Choose your side</b></h5>
                 <div class="card-body">
                     <div class="btn-group btn-lg">
@@ -77,7 +77,104 @@ background-size: cover;">
             </div>
         </div>
     </div>
-    <hr>
+    <div class="row" style="margin-bottom: 5%;">
+        <div class="col-lg-12 col-md-12">
+            <hr>
+            <h2 style="color: white; text-align: center;">PvP rooms</h2>
+            <hr>
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                    data-target="#modal">
+                Create room
+            </button>
+            <c:if test="${error != null}">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">ERROR</div>
+                    <div class="panel-body">
+                        <p style="color: red" align="center">${error}</p>
+                    </div>
+                </div>
+            </c:if>
+            <br>
+            <%--Modal--%>
+            <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">New PvP room</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">Choose your side and bet:
+                                </div>
+                                <div class="panel-body">
+                                    <form action="/main" method="post">
+                                        <fieldset>
+                                            <label>Side:</label><br>
+                                            <label class="radio-inline"><input type="radio" name="side" value="jedi">Jedi</label>
+                                            <label class="radio-inline"><input type="radio" name="side" value="sith">Sith</label>
+                                            <br>
+                                            <label for="bet">Bet:</label>
+                                            <input type="number" class="form-control" id="bet"
+                                                   name="bet">
+                                            <br>
+                                        </fieldset>
+                                        <button type="submit" class="btn btn-success form-control">Create
+                                        </button>
+                                        <br>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-danger form-control"
+                                                    data-dismiss="modal">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%--Modal--%>
+            <c:forEach var="game" items="${currentGames}">
+                <div class="card text-center col-lg-3 col-md-3" style="padding-bottom: 2%;">
+                    <img class="card-img"
+                         src="https://pre00.deviantart.net/63e4/th/pre/i/2015/319/2/a/republic_vs_empire_by_eiluvision-d9guzr1.png"
+                         alt="Card image" height="200" width="200"
+                         style="padding: 5px; display: block; margin-left: 25px;">
+                    <h5 class="card-title" style="color: white"><b>Enter room</b></h5>
+                    <div class="card-body" style="color: white; text-align: center">
+                        <c:choose>
+                            <c:when test="${game.jedi == null}">
+                                VS<br>
+                                ${game.sith.stat.rank} ${game.sith.username}
+                                <br>
+                                <div class="btn-group btn-lg">
+                                    <button type="button" class="btn btn-primary"><a
+                                            href="/game/enter?gameId=${game.gameId}"
+                                            style="text-decoration: none; color: white;">Join
+                                        battle as JEDI</a>
+                                    </button>
+                                </div>
+                            </c:when>
+                            <c:when test="${game.sith == null}">
+                                VS<br>
+                                ${game.jedi.stat.rank} ${game.jedi.username}
+                                <br>
+                                <div class="btn-group btn-lg">
+                                    <button type="button" class="btn btn-primary"><a href="/game?id=${game.gameId}"
+                                                                                     style="text-decoration: none; color: white;">Join
+                                        battle as SITH</a>
+                                    </button>
+                                </div>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
     <nav class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="container-fluid">
             <div class="navbar-header">
