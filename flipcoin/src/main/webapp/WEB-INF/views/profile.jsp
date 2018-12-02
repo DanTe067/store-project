@@ -41,7 +41,8 @@ background-size: cover;">
                 <sec:authorize access="isAuthenticated()">
                     <li>
                         <a href="/profile">
-                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} ${user.username}
+                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} <c:out
+                                value="${user.username}"/>
                         </a>
                     </li>
                     <li>

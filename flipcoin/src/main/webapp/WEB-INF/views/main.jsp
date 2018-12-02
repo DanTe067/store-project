@@ -5,7 +5,7 @@
   Time: 17:27
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -21,11 +21,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style="background:
-url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png) fixed center;
-background-size: cover;">
-<%--jedi https://cdn.hipwallpaper.com/i/91/42/k4fDga.jpg
-    sith https://wonderfulengineering.com/wp-content/uploads/2014/04/space-wallpapers-20.jpg
---%>
+        url(${mainBackground}) fixed center;
+        background-size: cover;">
 <div class="container">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -42,7 +39,8 @@ background-size: cover;">
                 <sec:authorize access="isAuthenticated()">
                     <li>
                         <a href="/profile">
-                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} ${user.username}
+                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} <c:out
+                                value="${user.username}"/>
                         </a>
                     </li>
                     <li>
@@ -87,6 +85,7 @@ background-size: cover;">
                 Create room
             </button>
             <c:if test="${error != null}">
+                <br>
                 <div class="panel panel-danger">
                     <div class="panel-heading">ERROR</div>
                     <div class="panel-body">
@@ -137,7 +136,7 @@ background-size: cover;">
                 </div>
             </div>
             <%--Modal--%>
-            <c:forEach var="game" items="${currentGames}">
+            <c:forEach var="game" items="${availableGames}">
                 <div class="card text-center col-lg-3 col-md-3" style="padding-bottom: 2%;">
                     <img class="card-img"
                          src="https://pre00.deviantart.net/63e4/th/pre/i/2015/319/2/a/republic_vs_empire_by_eiluvision-d9guzr1.png"
@@ -147,12 +146,13 @@ background-size: cover;">
                     <div class="card-body" style="color: white; text-align: center">
                         <c:choose>
                             <c:when test="${game.jedi == null}">
+                                ${game.bet}<br>
                                 VS<br>
-                                ${game.sith.stat.rank} ${game.sith.username}
+                                ${game.sith.stat.rank} <c:out value="${game.sith.username}"/>
                                 <br>
                                 <div class="btn-group btn-lg">
                                     <button type="button" class="btn btn-primary"><a
-                                            href="/game/enter?gameId=${game.gameId}"
+                                            href="/game?id=${game.gameId}"
                                             style="text-decoration: none; color: white;">Join
                                         battle as JEDI</a>
                                     </button>
@@ -160,7 +160,7 @@ background-size: cover;">
                             </c:when>
                             <c:when test="${game.sith == null}">
                                 VS<br>
-                                ${game.jedi.stat.rank} ${game.jedi.username}
+                                ${game.jedi.stat.rank} <c:out value="${game.jedi.username}"/>
                                 <br>
                                 <div class="btn-group btn-lg">
                                     <button type="button" class="btn btn-primary"><a href="/game?id=${game.gameId}"

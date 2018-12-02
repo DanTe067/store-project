@@ -64,12 +64,4 @@ public class GameDaoImpl implements GameDao {
         return games;
     }
 
-    @Override
-    public List<FlipGame> getByCreatorId(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from FlipGame where creator = :id");
-        query.setParameter("id", id);
-        List<FlipGame> games = query.list();
-        return games;
-    }
 }

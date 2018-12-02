@@ -45,7 +45,4 @@ public class GameService {
         return gameDao.getByCompleted(completed);
     }
 
-    public List<FlipGame> getGamesByCreatorId(Integer id) {
-        return gameDao.getByCreatorId(id);
-    }
 }

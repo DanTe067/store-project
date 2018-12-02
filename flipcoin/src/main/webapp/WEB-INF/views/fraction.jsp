@@ -39,7 +39,8 @@
                 <sec:authorize access="isAuthenticated()">
                     <li>
                         <a href="/profile">
-                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} ${user.username}
+                            <span class="glyphicon glyphicon-user"></span> Welcome, ${user.stat.rank} <c:out
+                                value="${user.username}"/>
                         </a>
                     </li>
                     <li>
@@ -57,6 +58,9 @@
                     style="margin-top: 50%; margin-bottom: 5%;"
                 </c:when>
                 <c:when test="${side == 'sith'}">
+                    style="margin-top: 10%; margin-bottom: 5%;"
+                </c:when>
+                <c:when test="${side == null}">
                     style="margin-top: 10%; margin-bottom: 5%;"
                 </c:when>
             </c:choose>
