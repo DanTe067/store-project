@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Random;
 
 @Controller
@@ -36,26 +36,25 @@ public class GameController {
     ResultService resultService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView loadGamePage(HttpServletRequest request, ModelAndView view, @RequestParam(required = false) String gameId) {
-        FlipGame game = (FlipGame) request.getSession(false).getAttribute("currentGame");
-        if (game == null) {
-            view.addObject("error", "There is no game you participating in!");
-            view.setViewName("main");
-            return view;
-        }
-        if (gameId != null) {
-            Integer id = Integer.parseInt(gameId);
-            game = enterGameById(id, (FlipUser) request.getSession(false).getAttribute("user"));
-        }
-        if (game == null) {
-            view.addObject("error", "Could not join room!");
-            view.setViewName("main");
-            return view;
-        } else {
-            request.getSession(false).setAttribute("currentGame", gameService.getGame(game.getGameId()));
-            view.addObject("game", gameService.getGame(game.getGameId()));
+    public ModelAndView loadGamePage(HttpSession session, ModelAndView view, @RequestParam(required = false) String gameId) {
+        FlipGame game = (FlipGame) session.getAttribute("currentGame");
+        if (game != null) {
+            view.addObject("game", game);
             view.setViewName("game");
             return view;
+        } else {
+            if (gameId != null) {
+                Integer id = Integer.parseInt(gameId);
+                FlipGame newGame = enterGameById(id, (FlipUser) session.getAttribute("user"));
+                session.setAttribute("currentGame", newGame);
+                view.addObject("game", newGame);
+                view.setViewName("game");
+                return view;
+            } else {
+                view.addObject("error", "Could not join room!");
+                view.setViewName("main");
+                return view;
+            }
         }
     }
 
@@ -76,7 +75,7 @@ public class GameController {
 
     @RequestMapping(method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public ModelAndView flipSide(@ModelAttribute FlipGame game, ModelAndView view, HttpServletRequest request) {
+    public ModelAndView flipSide(@ModelAttribute FlipGame game, ModelAndView view, HttpSession session) {
         Boolean side = new Random().nextBoolean();
         Boolean result;
         if (side) {
@@ -85,7 +84,7 @@ public class GameController {
             result = commitGameResult(side, game.getSith(), game.getJedi(), game.getBet());
         }
 
-        request.getSession(false).removeAttribute("currentGame");
+        session.removeAttribute("currentGame");
 
         if (!result) {
             gameService.deleteGame(game.getGameId());

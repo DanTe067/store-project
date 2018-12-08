@@ -66,7 +66,7 @@ background-size: cover;">
                             Log in
                         </button>
                         <br>
-                        <a href="/login?signup=true">
+                        <a href="/signup">
                             <button type="button" class="btn btn-primary btn-block">
                                 Sign up
                             </button>

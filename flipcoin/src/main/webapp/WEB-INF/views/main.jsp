@@ -84,6 +84,14 @@
                     data-target="#modal">
                 Create room
             </button>
+            <c:if test="${currentGame != null}">
+                <br>
+                <a href="/game">
+                    <button type="button" class="btn btn-primary btn-block">
+                        Current game
+                    </button>
+                </a>
+            </c:if>
             <c:if test="${error != null}">
                 <br>
                 <div class="panel panel-danger">
@@ -150,24 +158,28 @@
                                 VS<br>
                                 ${game.sith.stat.rank} <c:out value="${game.sith.username}"/>
                                 <br>
-                                <div class="btn-group btn-lg">
-                                    <button type="button" class="btn btn-primary"><a
-                                            href="/game?id=${game.gameId}"
-                                            style="text-decoration: none; color: white;">Join
-                                        battle as JEDI</a>
-                                    </button>
-                                </div>
+                                <c:if test="${currentGame == null}">
+                                    <div class="btn-group btn-lg">
+                                        <button type="button" class="btn btn-primary"><a
+                                                href="/game?id=${game.gameId}"
+                                                style="text-decoration: none; color: white;">Join
+                                            battle as JEDI</a>
+                                        </button>
+                                    </div>
+                                </c:if>
                             </c:when>
                             <c:when test="${game.sith == null}">
                                 VS<br>
                                 ${game.jedi.stat.rank} <c:out value="${game.jedi.username}"/>
                                 <br>
-                                <div class="btn-group btn-lg">
-                                    <button type="button" class="btn btn-primary"><a href="/game?id=${game.gameId}"
-                                                                                     style="text-decoration: none; color: white;">Join
-                                        battle as SITH</a>
-                                    </button>
-                                </div>
+                                <c:if test="${currentGame == null}">
+                                    <div class="btn-group btn-lg">
+                                        <button type="button" class="btn btn-primary"><a href="/game?id=${game.gameId}"
+                                                                                         style="text-decoration: none; color: white;">Join
+                                            battle as SITH</a>
+                                        </button>
+                                    </div>
+                                </c:if>
                             </c:when>
                         </c:choose>
                     </div>

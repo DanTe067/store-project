@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -23,13 +22,9 @@ public class SignUpController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView loadSignUpPage(ModelAndView view, @RequestParam String cancel) {
-        if (cancel != null) {
-            view.setViewName("login");
-            return view;
-        }
-        view.setViewName("signup");
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public ModelAndView loadSignUpPage(ModelAndView view) {
+        view.setViewName("/signup");
         return view;
     }
 

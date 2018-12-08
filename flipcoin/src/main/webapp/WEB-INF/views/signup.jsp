@@ -51,7 +51,7 @@ background-size: cover;">
                             Sign Up
                         </button>
                         <br>
-                        <a href="/signup?cancel=true">
+                        <a href="/login">
                             <button type="button" class="btn btn-danger btn-block">
                                 Cancel
                             </button>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -35,10 +34,9 @@ public class ProfileController {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView loadRefreshing(ModelAndView view, HttpServletRequest request) {
-        FlipStat stat = refreshStat(request);
+    public ModelAndView loadRefreshing(ModelAndView view, HttpSession session) {
+        FlipStat stat = refreshStat(session);
         if (stat != null) {
-            HttpSession session = request.getSession(false);
             Integer id = ((FlipUser) session.getAttribute("user")).getUserId();
             session.removeAttribute("user");
             session.setAttribute("user", userService.getUser(id));
@@ -51,8 +49,8 @@ public class ProfileController {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public FlipStat refreshStat(HttpServletRequest request) {
-        Integer statId = ((FlipUser) request.getSession(false).getAttribute("user")).getStat().getStatId();
+    public FlipStat refreshStat(HttpSession session) {
+        Integer statId = ((FlipUser) session.getAttribute("user")).getStat().getStatId();
         if (statId != null) {
             FlipStat newStat = statService.getStat(statId);
             newStat.setScore(0);

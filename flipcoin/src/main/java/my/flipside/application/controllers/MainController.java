@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.stream.Collectors;
 
@@ -30,28 +31,27 @@ public class MainController {
     GameService gameService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView loadMainPage(HttpServletRequest request, ModelAndView view, Principal principal, @RequestParam(required = false) String dismissGame) {
-        if (request.getSession(false).getAttribute("user") == null) {
-            request.getSession(false).setAttribute("user", userService.getUserByUsername(principal.getName()));
+    public ModelAndView loadMainPage(HttpSession session, ModelAndView view, Principal principal, @RequestParam(required = false) String dismissGame) {
+        if (session.getAttribute("user") == null) {
+            session.setAttribute("user", userService.getUserByUsername(principal.getName()));
         }
 
-        if (request.getSession(false).getAttribute("mainBackground") == null) {
-            Integer score = ((FlipUser) request.getSession(false).getAttribute("user")).getStat().getScore();
-            if (score > 0) {
-                request.getSession(false).setAttribute("mainBackground",
-                        "https://cdn.hipwallpaper.com/i/91/42/k4fDga.jpg");
-            } else if (score < 0) {
-                request.getSession(false).setAttribute("mainBackground",
-                        "https://wonderfulengineering.com/wp-content/uploads/2014/04/space-wallpapers-20.jpg");
-            } else {
-                request.getSession(false).setAttribute("mainBackground",
-                        "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png");
-            }
+
+        Integer score = ((FlipUser) session.getAttribute("user")).getStat().getScore();
+        if (score > 0) {
+            session.setAttribute("mainBackground",
+                    "https://cdn.hipwallpaper.com/i/91/42/k4fDga.jpg");
+        } else if (score < 0) {
+            session.setAttribute("mainBackground",
+                    "https://wonderfulengineering.com/wp-content/uploads/2014/04/space-wallpapers-20.jpg");
+        } else {
+            session.setAttribute("mainBackground",
+                    "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png");
         }
 
         if (dismissGame != null) {
             gameService.deleteGame(Integer.parseInt(dismissGame));
-            request.getSession(false).removeAttribute("currentGame");
+            session.removeAttribute("currentGame");
         }
 
         view.addObject("availableGames",
@@ -59,6 +59,7 @@ public class MainController {
                         .stream()
                         .filter(flipGame -> (flipGame.getJedi() == null || flipGame.getSith() == null))
                         .collect(Collectors.toList()));
+
         view.setViewName("main");
         return view;
     }
@@ -67,38 +68,21 @@ public class MainController {
     public ModelAndView createRoomByForm(HttpServletRequest request, ModelAndView view) {
         if (request.getSession(false).getAttribute("currentGame") != null) {
             view.addObject("error", "You are already in game!");
-            view.setViewName("main");
             return view;
         }
         Integer newGameId = createGame(request);
         if (newGameId != null) {
-            request.getSession(false).setAttribute("currentGame", gameService.getGame(newGameId));
-            view.addObject("currentGame", gameService.getGame(newGameId));
-            view.setViewName("game");
+            FlipGame newGame = gameService.getGame(newGameId);
+            request.getSession(false).setAttribute("currentGame", newGame);
+            view.addObject("currentGame", newGame);
+
         } else {
             view.addObject("error", "Some error appears while creating your room. Try one more time");
-            view.setViewName("main");
+
         }
+        view.setViewName("main");
         return view;
     }
-
-//    @RequestMapping(value = "/main/enter", method = RequestMethod.PUT)
-//    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-//    public ModelAndView enterRoom(HttpServletRequest request, ModelAndView view, @RequestParam Integer gameId) {
-//        if (request.getSession(false).getAttribute("currentGame") != null) {
-//            view.addObject("error", "You are already in game!");
-//            view.setViewName("main");
-//        } else {
-//            if (enterGameById(gameId, (FlipUser) request.getSession(false).getAttribute("user")) != null) {
-//                request.getSession(false).setAttribute("currentGame", gameService.getGame(gameId));
-//                view.setViewName("game");
-//            } else {
-//                view.addObject("error", "Could not join room!");
-//                view.setViewName("main");
-//            }
-//        }
-//        return view;
-//    }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Integer createGame(HttpServletRequest request) {
