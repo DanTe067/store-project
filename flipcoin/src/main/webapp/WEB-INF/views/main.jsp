@@ -86,7 +86,7 @@
             </button>
             <c:if test="${currentGame != null}">
                 <br>
-                <a href="/game">
+                <a href="/game?gameId=${currentGame.gameId}">
                     <button type="button" class="btn btn-primary btn-block">
                         Current game
                     </button>
@@ -161,7 +161,7 @@
                                 <c:if test="${currentGame == null}">
                                     <div class="btn-group btn-lg">
                                         <button type="button" class="btn btn-primary"><a
-                                                href="/game?id=${game.gameId}"
+                                                href="/game?gameId=${game.gameId}"
                                                 style="text-decoration: none; color: white;">Join
                                             battle as JEDI</a>
                                         </button>
@@ -174,8 +174,9 @@
                                 <br>
                                 <c:if test="${currentGame == null}">
                                     <div class="btn-group btn-lg">
-                                        <button type="button" class="btn btn-primary"><a href="/game?id=${game.gameId}"
-                                                                                         style="text-decoration: none; color: white;">Join
+                                        <button type="button" class="btn btn-primary"><a
+                                                href="/game?gameId=${game.gameId}"
+                                                style="text-decoration: none; color: white;">Join
                                             battle as SITH</a>
                                         </button>
                                     </div>

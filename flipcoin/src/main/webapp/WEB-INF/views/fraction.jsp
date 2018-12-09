@@ -72,6 +72,7 @@
             <div class="panel-body">
                 <form action="/fraction" method="post">
                     <fieldset>
+                        <input type="hidden" id="side" name="side" value="${side}">
                         <label for="result">Report:</label>
                         <input align="center" type="text" readonly class="form-control" id="result"
                                name="result" value="${result}" disabled>

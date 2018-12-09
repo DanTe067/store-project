@@ -8,6 +8,7 @@ import my.flipside.application.model.FlipUser;
 import my.flipside.application.service.GameService;
 import my.flipside.application.service.ResultService;
 import my.flipside.application.service.StatService;
+import my.flipside.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -29,6 +30,8 @@ import java.util.Random;
 public class GameController {
 
     @Autowired
+    UserService userService;
+    @Autowired
     GameService gameService;
     @Autowired
     StatService statService;
@@ -36,23 +39,33 @@ public class GameController {
     ResultService resultService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView loadGamePage(HttpSession session, ModelAndView view, @RequestParam(required = false) String gameId) {
+    public ModelAndView loadGamePage(HttpSession session, ModelAndView view, @RequestParam String gameId) {
         FlipGame game = (FlipGame) session.getAttribute("currentGame");
         if (game != null) {
-            view.addObject("game", game);
-            view.setViewName("game");
-            return view;
-        } else {
-            if (gameId != null) {
-                Integer id = Integer.parseInt(gameId);
-                FlipGame newGame = enterGameById(id, (FlipUser) session.getAttribute("user"));
-                session.setAttribute("currentGame", newGame);
-                view.addObject("game", newGame);
-                view.setViewName("game");
+            game = gameService.getGame(game.getGameId());
+            FlipResult result = resultService.getResultByGameId(game.getGameId());
+            if (result != null) {
+                session.removeAttribute("currentGame");
+                session.removeAttribute("creator");
+                view.addObject("result", result)
+                        .setViewName("game");
                 return view;
             } else {
-                view.addObject("error", "Could not join room!");
+                session.setAttribute("currentGame", game);
+                view.addObject("game", game)
+                        .setViewName("game");
+                return view;
+            }
+        } else {
+            Integer id = Integer.parseInt(gameId);
+            FlipGame newGame = enterGameById(id, userService.getUser(((FlipUser) session.getAttribute("user")).getUserId()));
+            if (newGame != null) {
+                session.setAttribute("currentGame", newGame);
                 view.setViewName("main");
+                return view;
+            } else {
+                view.addObject("error", "Could not join room!")
+                        .setViewName("main");
                 return view;
             }
         }
@@ -61,11 +74,11 @@ public class GameController {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public FlipGame enterGameById(Integer gameId, FlipUser user) {
         FlipGame game = gameService.getGame(gameId);
-        if (game != null && user.getStat().getAccount() >= game.getBet()) {
+        if (game != null && user.getStat().getAccount() >= game.getBet() && !game.isCompleted()) {
             if (game.getJedi() == null) {
-                game.setSith(user);
-            } else if (game.getSith() == null) {
                 game.setJedi(user);
+            } else if (game.getSith() == null) {
+                game.setSith(user);
             }
             return gameService.updateGame(game);
         } else {
@@ -77,6 +90,7 @@ public class GameController {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public ModelAndView flipSide(@ModelAttribute FlipGame game, ModelAndView view, HttpSession session) {
         Boolean side = new Random().nextBoolean();
+        game = gameService.getGame(game.getGameId());
         Boolean result;
         if (side) {
             result = commitGameResult(side, game.getJedi(), game.getSith(), game.getBet());
@@ -85,21 +99,23 @@ public class GameController {
         }
 
         session.removeAttribute("currentGame");
+        session.removeAttribute("creator");
 
         if (!result) {
             gameService.deleteGame(game.getGameId());
-            view.addObject("error", "Something goes wrong, game is not accounted!");
-            view.setViewName("main");
+            view.addObject("error", "Something goes wrong, game is not accounted!")
+                    .setViewName("main");
             return view;
         }
 
-        game.setCompleted(false);
+        game.setCompleted(true);
         gameService.updateGame(game);
         view.addObject("resultCoin",
                 side ? "https://www.digitaltrends.com/wp-content/uploads/2011/08/star-wars-coins-2.png"
                         : "https://laughingsquid.com/wp-content/uploads/darth.png");
-        view.addObject("result", resultService.createResult(new FlipResult(game, (side ? game.getJedi() : game.getSith()))));
-        view.setViewName("game");
+        view.addObject("result", resultService.createResult(
+                new FlipResult(game, (side ? game.getJedi() : game.getSith()))))
+                .setViewName("game");
         return view;
     }
 

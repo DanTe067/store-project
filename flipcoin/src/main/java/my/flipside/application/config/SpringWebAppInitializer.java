@@ -21,5 +21,6 @@ public class SpringWebAppInitializer implements WebApplicationInitializer {
 
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
+        dispatcher.setAsyncSupported(true);
     }
 }

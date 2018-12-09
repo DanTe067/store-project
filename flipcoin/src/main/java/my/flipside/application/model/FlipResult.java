@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "flipresult", schema = "public")
@@ -24,7 +24,7 @@ public class FlipResult {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "winner", referencedColumnName = "user_id")
     private FlipUser winner;
-    private Date date;
+    private LocalDate date;
 
     public FlipResult(FlipGame game, FlipUser winner) {
         this.game = game;

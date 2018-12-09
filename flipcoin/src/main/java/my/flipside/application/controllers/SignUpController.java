@@ -22,7 +22,7 @@ public class SignUpController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView loadSignUpPage(ModelAndView view) {
         view.setViewName("/signup");
         return view;
@@ -32,17 +32,17 @@ public class SignUpController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView signUpByForm(ModelAndView view, @ModelAttribute FlipUser user, BindingResult result) {
         if (result.hasErrors()) {
-            view.addObject("error", "Registration failed! Errors found in form you've filled");
-            view.setViewName("signup");
+            view.addObject("error", "Registration failed! Errors found in form you've filled")
+                    .setViewName("signup");
         }
         Integer id = userService.createUser(user);
         if (id != null) {
-            view.setViewName("login");
-            view.addObject("success", "You've successfully signed up (#" + id + ")");
+            view.addObject("success", "You've successfully signed up (#" + id + ")")
+                    .setViewName("login");
             return view;
         } else {
-            view.addObject("error", "Registration failed! Try one more time");
-            view.setViewName("signup");
+            view.addObject("error", "Registration failed! Try one more time")
+                    .setViewName("signup");
             return view;
         }
     }

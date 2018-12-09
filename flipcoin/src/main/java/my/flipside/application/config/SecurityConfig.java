@@ -43,28 +43,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
+                .antMatchers("/signup*").permitAll()
                 .antMatchers("/login*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                /*.successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-                                                        HttpServletResponse httpServletResponse,
-                                                        Authentication authentication) throws IOException, ServletException {
-                        HttpSession session = httpServletRequest.getSession();
-                        session.setMaxInactiveInterval(300);
-                        session.setAttribute("user", userService.getUserByUsername(
-                                authentication.getName()));
-                    }
-                })*/
                 .defaultSuccessUrl("/main")
                 .failureUrl("/login?error=true")
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true);
+                .logoutSuccessUrl("/login");
     }
 }

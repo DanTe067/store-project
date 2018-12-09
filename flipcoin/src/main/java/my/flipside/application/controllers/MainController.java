@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.stream.Collectors;
@@ -31,7 +30,9 @@ public class MainController {
     GameService gameService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView loadMainPage(HttpSession session, ModelAndView view, Principal principal, @RequestParam(required = false) String dismissGame) {
+    public ModelAndView loadMainPage(HttpSession session, ModelAndView view, Principal principal,
+                                     @RequestParam(required = false) String dismissGame,
+                                     @RequestParam(required = false) String leaveGame) {
         if (session.getAttribute("user") == null) {
             session.setAttribute("user", userService.getUserByUsername(principal.getName()));
         }
@@ -51,6 +52,16 @@ public class MainController {
 
         if (dismissGame != null) {
             gameService.deleteGame(Integer.parseInt(dismissGame));
+            session.removeAttribute("creator");
+            session.removeAttribute("currentGame");
+        }
+        if (leaveGame != null) {
+            FlipGame game = gameService.getGame(Integer.parseInt(dismissGame));
+            if (((FlipUser) session.getAttribute("user")).getUserId() == game.getSith().getUserId()) {
+                game.setSith(null);
+            } else {
+                game.setJedi(null);
+            }
             session.removeAttribute("currentGame");
         }
 
@@ -58,24 +69,24 @@ public class MainController {
                 gameService.getGamesByCompleted(false)
                         .stream()
                         .filter(flipGame -> (flipGame.getJedi() == null || flipGame.getSith() == null))
-                        .collect(Collectors.toList()));
-
-        view.setViewName("main");
+                        .collect(Collectors.toList()))
+                .setViewName("main");
         return view;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView createRoomByForm(HttpServletRequest request, ModelAndView view) {
-        if (request.getSession(false).getAttribute("currentGame") != null) {
-            view.addObject("error", "You are already in game!");
+    public ModelAndView createRoomByForm(HttpSession session, ModelAndView view, @RequestParam String bet, @RequestParam String side) {
+        if (session.getAttribute("currentGame") != null) {
+            view.addObject("error", "You are already in game!")
+                    .setViewName("main");
             return view;
         }
-        Integer newGameId = createGame(request);
+        Integer newGameId = createGame(session, Integer.parseInt(bet), side);
         if (newGameId != null) {
             FlipGame newGame = gameService.getGame(newGameId);
-            request.getSession(false).setAttribute("currentGame", newGame);
+            session.setAttribute("currentGame", newGame);
+            session.setAttribute("creator", true);
             view.addObject("currentGame", newGame);
-
         } else {
             view.addObject("error", "Some error appears while creating your room. Try one more time");
 
@@ -85,17 +96,17 @@ public class MainController {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Integer createGame(HttpServletRequest request) {
+    public Integer createGame(HttpSession session, int bet, String side) {
         FlipGame game = new FlipGame();
         game.setCompleted(false);
-        game.setBet(Integer.parseInt(request.getParameter("bet")));
-        FlipUser user = (FlipUser) request.getSession(false).getAttribute("user");
+        game.setBet(bet);
+        FlipUser user = (FlipUser) session.getAttribute("user");
         if (user.getStat().getAccount() < game.getBet()) {
             return null;
         }
-        if (request.getParameter("side").equals("jedi")) {
+        if (side.equals("jedi")) {
             game.setJedi(user);
-        } else if (request.getParameter("side").equals("sith")) {
+        } else if (side.equals("sith")) {
             game.setSith(user);
         } else {
             return null;

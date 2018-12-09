@@ -16,7 +16,7 @@ public class FlipGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_id")
-    private int gameId;
+    private Integer gameId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "jedi", referencedColumnName = "user_id")
     private FlipUser jedi;

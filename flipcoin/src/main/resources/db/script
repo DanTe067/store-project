@@ -1,0 +1,141 @@
+CREATE TABLE fliprole (
+  role_id SERIAL PRIMARY KEY,
+  name    VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE flipstat (
+  stat_id INT PRIMARY KEY,
+  account INT,
+  score   INT,
+  rank    VARCHAR(20)
+);
+
+CREATE TABLE flipuser (
+  user_id  SERIAL PRIMARY KEY,
+  login    VARCHAR(20) NOT NULL,
+  password VARCHAR(20) NOT NULL,
+  email    VARCHAR(50),
+  stat_id  INT REFERENCES flipstat UNIQUE,
+  role_id  INT REFERENCES fliprole
+);
+
+CREATE TABLE flipgame (
+  game_id   SERIAL PRIMARY KEY,
+  jedi      INT REFERENCES flipuser (user_id),
+  sith      INT REFERENCES flipuser (user_id),
+  bet       INT NOT NULL CHECK (bet > 0),
+  completed BOOLEAN
+);
+
+DROP TABLE flipgame CASCADE;
+
+CREATE TABLE flipresult (
+  result_id SERIAL PRIMARY KEY,
+  game_id   INT REFERENCES flipgame UNIQUE,
+  winner    INT REFERENCES flipuser,
+  date      DATE
+);
+-----------------------------------
+
+CREATE OR REPLACE FUNCTION set_game_time()
+  RETURNS TRIGGER AS $$
+BEGIN
+  NEW.date = current_date;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_time
+  BEFORE INSERT
+  ON flipresult
+  FOR EACH ROW
+EXECUTE PROCEDURE set_game_time();
+-----------------------------------
+
+CREATE OR REPLACE FUNCTION create_stat()
+  RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO flipstat (stat_id, account, score)
+  VALUES (NEW.user_id, 1000, 0);
+  NEW.stat_id = NEW.user_id;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_stat
+  BEFORE INSERT
+  ON flipuser
+  FOR EACH ROW
+EXECUTE PROCEDURE create_stat();
+
+
+DROP TRIGGER set_stat
+ON flipuser;
+-----------------------------------
+
+CREATE OR REPLACE FUNCTION set_role_id()
+  RETURNS TRIGGER AS $$
+BEGIN
+  NEW.role_id = 2;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_role
+  BEFORE INSERT
+  ON flipuser
+  FOR EACH ROW
+EXECUTE PROCEDURE set_role_id();
+-----------------------------------
+
+CREATE OR REPLACE FUNCTION set_rank_name()
+  RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.score <= -1 AND NEW.score > -5
+  THEN
+    NEW.rank = 'Sith apprentice';
+  ELSEIF NEW.score <= -5 AND NEW.score > -10
+    THEN
+      NEW.rank = 'Sith master';
+  ELSEIF NEW.score <= -10
+    THEN
+      NEW.rank = 'Darth Lord';
+  ELSEIF NEW.score = 0
+    THEN
+      NEW.rank = 'Chosen one';
+  ELSEIF NEW.score >= 1 AND NEW.score < 5
+    THEN
+      NEW.rank = 'Jedi padavan';
+  ELSEIF NEW.score >= 5 AND NEW.score < 10
+    THEN
+      NEW.rank = 'Jedi knight';
+  ELSEIF NEW.score >= 10
+    THEN
+      NEW.rank = 'Jedi grand master';
+  END IF;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_rank
+  BEFORE INSERT OR UPDATE
+  ON flipstat
+  FOR EACH ROW
+EXECUTE PROCEDURE set_rank_name();
+-----------------------------------
+INSERT INTO fliprole (name) VALUES ('admin');
+INSERT INTO fliprole (name) VALUES ('user');
+
+INSERT INTO flipuser (login, password, role_id)
+VALUES ('admin', 'qwerty', 1);
+INSERT INTO flipuser (login, password, role_id)
+VALUES ('test', 'test', 2);
+
+INSERT INTO flipgame (jedi, sith, bet, completed)
+VALUES (3, 5, 10, TRUE);
+INSERT INTO flipresult (game_id, winner)
+VALUES (2, 3);

@@ -63,8 +63,9 @@ background-size: cover;">
                             <h4 align="center">Game #${game.gameId}</h4>
                         </div>
                         <div class="panel-body">
-                            <form action="/profile" method="post">
+                            <form action="/game" method="post">
                                 <fieldset>
+                                    <input type="hidden" id="gameId" name="gameId" value="${game.gameId}">
                                     <label for="jedi">Jedi:</label>
                                     <input type="text" size="20" class="form-control" id="jedi"
                                            name="jedi" value="${game.jedi.stat.rank} ${game.jedi.username}" disabled>
@@ -79,15 +80,26 @@ background-size: cover;">
                                     <input type="number" class="form-control" id="bet"
                                            name="bet" value="${game.bet}" disabled>
                                     <br>
-                                    <button type="submit" class="btn btn-success btn-block">
-                                        FLIP
-                                    </button>
-                                    <br>
-                                    <a href="/main?dismissGame=${game.gameId}">
-                                        <button type="button" class="btn btn-danger btn-block">
-                                            Dismiss game
-                                        </button>
-                                    </a>
+                                    <c:choose>
+                                        <c:when test="${creator == true && (game.jedi != null && game.sith != null)}">
+                                            <button type="submit" class="btn btn-success btn-block">
+                                                FLIP
+                                            </button>
+                                            <br>
+                                            <a href="/main?dismissGame=${game.gameId}">
+                                                <button type="button" class="btn btn-danger btn-block">
+                                                    Dismiss game
+                                                </button>
+                                            </a>
+                                        </c:when>
+                                        <c:when test="${creator == null}">
+                                            <a href="/main?leaveGame=${game.gameId}">
+                                                <button type="button" class="btn btn-danger btn-block">
+                                                    Leave game
+                                                </button>
+                                            </a>
+                                        </c:when>
+                                    </c:choose>
                                 </fieldset>
                             </form>
                         </div>
