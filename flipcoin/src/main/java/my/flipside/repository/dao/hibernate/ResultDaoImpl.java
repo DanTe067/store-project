@@ -22,10 +22,7 @@ public class ResultDaoImpl implements ResultDao {
     @Override
     public int create(FlipResult result) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         session.save(result);
-        //transaction.commit();
-        //session.close();
         return result.getResultId();
     }
 
@@ -33,29 +30,22 @@ public class ResultDaoImpl implements ResultDao {
     public FlipResult get(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         FlipResult result = session.get(FlipResult.class, id);
-        //session.close();
         return result;
     }
 
     @Override
     public FlipResult update(FlipResult result) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipResult updResult = (FlipResult) session.merge(result);
-        //transaction.commit();
-        //session.close();
         return updResult;
     }
 
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipResult result = new FlipResult();
         result.setResultId(id);
         session.delete(result);
-        //transaction.commit();
-        //session.close();
     }
 
     @Override
@@ -68,10 +58,9 @@ public class ResultDaoImpl implements ResultDao {
     @Override
     public FlipResult getByGameId(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from FlipResult where game = :id");
+        Query query = session.createQuery("from FlipResult where game.gameId = :id");
         query.setParameter("id", id);
         FlipResult result = (FlipResult) query.uniqueResult();
-        //session.close();
         return result;
     }
 
@@ -81,7 +70,6 @@ public class ResultDaoImpl implements ResultDao {
         Query query = session.createQuery("from FlipResult where winner = :id");
         query.setParameter("id", id);
         List<FlipResult> results = query.list();
-        //session.close();
         return results;
     }
 }

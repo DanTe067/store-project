@@ -22,17 +22,13 @@ public class StatDaoImpl implements StatDao {
     public FlipStat get(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         FlipStat stat = session.get(FlipStat.class, id);
-        //session.close();
         return stat;
     }
 
     @Override
     public FlipStat update(FlipStat stat) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipStat updStat = (FlipStat) session.merge(stat);
-        //transaction.commit();
-        //session.close();
         return updStat;
     }
 

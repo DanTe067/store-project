@@ -21,10 +21,7 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public int create(FlipRole role) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         session.save(role);
-        //transaction.commit();
-        //session.close();
         return role.getRoleId();
     }
 
@@ -39,22 +36,16 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public FlipRole update(FlipRole role) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipRole updRole = (FlipRole) session.merge(role);
-        //transaction.commit();
-        //session.close();
         return updRole;
     }
 
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipRole role = new FlipRole();
         role.setRoleId(id);
         session.delete(role);
-        //transaction.commit();
-        //session.close();
     }
 
     @Override

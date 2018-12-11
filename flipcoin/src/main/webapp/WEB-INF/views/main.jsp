@@ -80,18 +80,22 @@
             <hr>
             <h2 style="color: white; text-align: center;">PvP rooms</h2>
             <hr>
-            <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
-                    data-target="#modal">
-                Create room
-            </button>
-            <c:if test="${currentGame != null}">
-                <br>
-                <a href="/game?gameId=${currentGame.gameId}">
-                    <button type="button" class="btn btn-primary btn-block">
-                        Current game
+            <c:choose>
+                <c:when test="${currentGame == null}">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                            data-target="#modal">
+                        Create room
                     </button>
-                </a>
-            </c:if>
+                </c:when>
+                <c:when test="${currentGame != null}">
+                    <br>
+                    <a href="/game?gameId=${currentGame.gameId}">
+                        <button type="button" class="btn btn-primary btn-block">
+                            Current game
+                        </button>
+                    </a>
+                </c:when>
+            </c:choose>
             <c:if test="${error != null}">
                 <br>
                 <div class="panel panel-danger">
@@ -129,7 +133,7 @@
                                         </fieldset>
                                         <button type="submit" class="btn btn-success form-control">Create
                                         </button>
-                                        <br>
+                                        <br><br>
                                         <div class="form-group">
                                             <button type="button" class="btn btn-danger form-control"
                                                     data-dismiss="modal">

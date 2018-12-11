@@ -43,7 +43,8 @@ public class FractionController {
     public ModelAndView loadBattleResult(ModelAndView view, HttpSession session, @RequestParam int bet,
                                          @RequestParam String side) {
         view.addObject("result",
-                result(session, side, (FlipUser) session.getAttribute("user"), bet))
+                result(session, side,
+                        (FlipUser) session.getAttribute("user"), bet))
                 .addObject("fractionalBackground", "https://curiousmedia.com/assets/content/starwars-3.jpg")
                 .setViewName("fraction");
         return view;

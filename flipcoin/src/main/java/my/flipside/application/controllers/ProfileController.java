@@ -27,7 +27,9 @@ public class ProfileController {
     StatService statService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView loadProfilePage(ModelAndView view) {
+    public ModelAndView loadProfilePage(ModelAndView view, HttpSession session) {
+        session.setAttribute("user", userService.getUser(
+                ((FlipUser) session.getAttribute("user")).getUserId()));
         view.setViewName("profile");
         return view;
     }
@@ -42,7 +44,8 @@ public class ProfileController {
             session.setAttribute("user", userService.getUser(id));
             view.addObject("success", "You've successfully refreshed your profile");
         } else {
-            view.addObject("error", "There was an error in refreshing your profile. Try again later");
+            view.addObject("error",
+                    "There was an error in refreshing your profile. Try again later");
         }
         view.setViewName("profile");
         return view;

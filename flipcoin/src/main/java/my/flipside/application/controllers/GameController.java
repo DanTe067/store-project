@@ -113,8 +113,13 @@ public class GameController {
         view.addObject("resultCoin",
                 side ? "https://www.digitaltrends.com/wp-content/uploads/2011/08/star-wars-coins-2.png"
                         : "https://laughingsquid.com/wp-content/uploads/darth.png");
-        view.addObject("result", resultService.createResult(
-                new FlipResult(game, (side ? game.getJedi() : game.getSith()))))
+        FlipResult newResult = resultService.getResult(
+                resultService.createResult(
+                        new FlipResult(
+                                game, (side ? game.getJedi() : game.getSith())
+                        )
+                ));
+        view.addObject("result", newResult)
                 .setViewName("game");
         return view;
     }

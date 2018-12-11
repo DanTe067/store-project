@@ -33,10 +33,8 @@ public class MainController {
     public ModelAndView loadMainPage(HttpSession session, ModelAndView view, Principal principal,
                                      @RequestParam(required = false) String dismissGame,
                                      @RequestParam(required = false) String leaveGame) {
-        if (session.getAttribute("user") == null) {
-            session.setAttribute("user", userService.getUserByUsername(principal.getName()));
-        }
 
+        session.setAttribute("user", userService.getUserByUsername(principal.getName()));
 
         Integer score = ((FlipUser) session.getAttribute("user")).getStat().getScore();
         if (score > 0) {

@@ -22,10 +22,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int create(FlipUser user) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         session.save(user);
-        //transaction.commit();
-        //session.close();
         return user.getUserId();
     }
 
@@ -40,22 +37,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public FlipUser update(FlipUser user) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipUser updUser = (FlipUser) session.merge(user);
-        //transaction.commit();
-        //session.close();
         return updUser;
     }
 
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        //Transaction transaction = session.beginTransaction();
         FlipUser user = new FlipUser();
         user.setUserId(id);
         session.delete(user);
-        //transaction.commit();
-        //session.close();
     }
 
     @Override
@@ -71,7 +62,6 @@ public class UserDaoImpl implements UserDao {
         Query query = session.createQuery("from FlipUser where username = :username");
         query.setParameter("username", username);
         FlipUser user = (FlipUser) query.uniqueResult();
-        //session.close();
         return user;
     }
 
@@ -82,7 +72,6 @@ public class UserDaoImpl implements UserDao {
         query.setParameter("username", username);
         query.setParameter("password", password);
         FlipUser user = (FlipUser) query.uniqueResult();
-        //session.close();
         return user;
     }
 }

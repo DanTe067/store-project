@@ -5,7 +5,7 @@
   Time: 17:07
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -54,10 +54,10 @@ background-size: cover;">
     </nav>
     <div class="row" style="margin-top: 15%; margin-bottom: 10%;">
         <div class="col-lg-4 col-md-4 col-lg-offset-4 col-md-offset-4">
-            <img src="https://images-platform.99static.com/DqFkFeOyq7qmDBYP1QOfFOqMxxc=/fit-in/900x675/99designs-contests-attachments/49/49133/attachment_49133556"
-                 style="margin-left: 55px;">
             <c:choose>
                 <c:when test="${result == null}">
+                    <img src="https://images-platform.99static.com/DqFkFeOyq7qmDBYP1QOfFOqMxxc=/fit-in/900x675/99designs-contests-attachments/49/49133/attachment_49133556"
+                         style="margin-left: 55px;">
                     <div class="panel panel-secondary">
                         <div class="panel-heading">
                             <h4 align="center">Game #${game.gameId}</h4>
@@ -107,8 +107,8 @@ background-size: cover;">
                 </c:when>
                 <c:when test="${result != null}">
                     <img src="${resultCoin}"
-                         align="center">
-                    <div class="panel panel-info col-lg-6 col-md-6 col-lg-offset-4 col-md-offset-4">
+                         align="center" style="width: 240px; height: 240px; margin-left: 55px;">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <h4 align="center">Result</h4>
                         </div>
