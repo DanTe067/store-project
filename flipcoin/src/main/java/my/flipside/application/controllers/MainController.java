@@ -48,18 +48,19 @@ public class MainController {
                     "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/moving-through-stars-in-space_-1zccenlb__F0000.png");
         }
 
-        if (dismissGame != null) {
+        if (dismissGame != null && gameService.getGame(Integer.parseInt(dismissGame)) != null) {
             gameService.deleteGame(Integer.parseInt(dismissGame));
             session.removeAttribute("creator");
             session.removeAttribute("currentGame");
         }
-        if (leaveGame != null) {
-            FlipGame game = gameService.getGame(Integer.parseInt(dismissGame));
+        if (leaveGame != null && gameService.getGame(Integer.parseInt(leaveGame)) != null) {
+            FlipGame game = gameService.getGame(Integer.parseInt(leaveGame));
             if (((FlipUser) session.getAttribute("user")).getUserId() == game.getSith().getUserId()) {
                 game.setSith(null);
             } else {
                 game.setJedi(null);
             }
+            gameService.updateGame(game);
             session.removeAttribute("currentGame");
         }
 
@@ -99,7 +100,7 @@ public class MainController {
         game.setCompleted(false);
         game.setBet(bet);
         FlipUser user = (FlipUser) session.getAttribute("user");
-        if (user.getStat().getAccount() < game.getBet()) {
+        if (user.getStat().getAccount() < game.getBet() || game.getBet() <= 0) {
             return null;
         }
         if (side.equals("jedi")) {

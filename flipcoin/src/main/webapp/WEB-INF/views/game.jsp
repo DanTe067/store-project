@@ -80,17 +80,20 @@ background-size: cover;">
                                     <input type="number" class="form-control" id="bet"
                                            name="bet" value="${game.bet}" disabled>
                                     <br>
+                                    <c:if test="${creator != null}">
+                                        <a href="/main?dismissGame=${game.gameId}">
+                                            <button type="button" class="btn btn-danger btn-block">
+                                                Dismiss game
+                                            </button>
+                                        </a>
+                                    </c:if>
                                     <c:choose>
-                                        <c:when test="${creator == true && (game.jedi != null && game.sith != null)}">
+                                        <c:when test="${creator != null && game.jedi != null && game.sith != null}">
+                                            <br>
                                             <button type="submit" class="btn btn-success btn-block">
                                                 FLIP
                                             </button>
                                             <br>
-                                            <a href="/main?dismissGame=${game.gameId}">
-                                                <button type="button" class="btn btn-danger btn-block">
-                                                    Dismiss game
-                                                </button>
-                                            </a>
                                         </c:when>
                                         <c:when test="${creator == null}">
                                             <a href="/main?leaveGame=${game.gameId}">

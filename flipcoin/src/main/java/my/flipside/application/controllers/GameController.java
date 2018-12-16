@@ -43,6 +43,12 @@ public class GameController {
         FlipGame game = (FlipGame) session.getAttribute("currentGame");
         if (game != null) {
             game = gameService.getGame(game.getGameId());
+            if (game == null) {
+                session.removeAttribute("currentGame");
+                session.removeAttribute("creator");
+                view.setViewName("main");
+                return view;
+            }
             FlipResult result = resultService.getResultByGameId(game.getGameId());
             if (result != null) {
                 session.removeAttribute("currentGame");
@@ -51,6 +57,7 @@ public class GameController {
                         .setViewName("game");
                 return view;
             } else {
+                game = gameService.getGame(game.getGameId());
                 session.setAttribute("currentGame", game);
                 view.addObject("game", game)
                         .setViewName("game");

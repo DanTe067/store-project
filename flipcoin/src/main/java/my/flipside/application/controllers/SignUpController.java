@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/signup")
 @EnableTransactionManagement
@@ -34,6 +36,11 @@ public class SignUpController {
         if (result.hasErrors()) {
             view.addObject("error", "Registration failed! Errors found in form you've filled")
                     .setViewName("signup");
+        }
+        if (Objects.deepEquals(user.getUsername(), userService.getUserByUsername(user.getUsername()))) {
+            view.addObject("error", "Registration failed! Your username is already in use")
+                    .setViewName("signup");
+            return view;
         }
         Integer id = userService.createUser(user);
         if (id != null) {
